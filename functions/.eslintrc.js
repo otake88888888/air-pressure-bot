@@ -26,5 +26,6 @@ module.exports = {
   ],
   rules: {
     quotes: ["error", "double"],
+    camelcase: "off",
   },
 };
