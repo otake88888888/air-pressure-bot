@@ -8,36 +8,35 @@ export interface ZutoolWeatherStatus {
     tommorow: Tommorow[]
     dayaftertomorrow: Dayaftertomorrow[]
   }
-  
-  export interface Yesterday {
+
+export interface Yesterday {
     time: string
     weather: string
     temp: string
     pressure: string
     pressure_level: string
   }
-  
-  export interface Today {
+
+export interface Today {
     time: string
     weather: string
     temp: string
     pressure: string
     pressure_level: string
   }
-  
-  export interface Tommorow {
+
+export interface Tommorow {
     time: string
     weather: string
     temp: string
     pressure: string
     pressure_level: string
   }
-  
-  export interface Dayaftertomorrow {
+
+export interface Dayaftertomorrow {
     time: string
     weather: string
     temp: string
     pressure: string
     pressure_level: string
   }
-  
