@@ -70,6 +70,5 @@ async function handlePostBack(events: any, userId: any) {
 
 async function handleReply(events: any, userId: any) {
   functions.logger.info("handle reply.", userId);
-  const replyText = "test";
-  await airPressureService.replyMessage(replyText, events);
+  airPressureService.handleReply(events);
 }

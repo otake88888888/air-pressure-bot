@@ -14,8 +14,8 @@ export class AirPressureService {
   constructor(
     private weatherRepository: WeatherRepository,
     private lineRepository: LineRepository,
-    @inject("ILogger") private logger: ILogger) {
-  }
+    @inject("ILogger") private logger: ILogger
+  ) {}
 
   async getAirPressure() {
     const weather = await this.weatherRepository.getWeather();
@@ -28,9 +28,19 @@ export class AirPressureService {
     await this.lineRepository.replyMessage(replyToken, replyTextString);
   }
 
+  async handleReply(events: any) {
+    const weather = await this.getAirPressure();
+    const todayWeather = weather?.today;
+    const amSevenWeather = todayWeather?.find((x) => x.time === "7");
+    const formated = this.weatherRepository.getFormatedWeather(amSevenWeather);
+    await this.replyMessage(formated, events);
+  }
+
   async handlePostBack(
       action: string | string[] | null,
-      parsed: queryString.ParsedQuery<string>, userId: any) {
+      parsed: queryString.ParsedQuery<string>,
+      userId: any
+  ) {
     this.logger.info(action);
     this.logger.info(parsed);
     this.logger.info(userId);
