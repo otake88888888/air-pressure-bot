@@ -1,9 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable require-jsdoc */
-
 import "reflect-metadata";
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
@@ -54,7 +49,7 @@ export const bot = functions.https.onRequest(async (request, response) => {
 exports.scheduledFunction = functions.pubsub
     .schedule("0 7 * * *")
     .onRun(async (context) => {
-      functions.logger.info("batch start.");
+      functions.logger.info("batch start." + context.eventId);
       await airPressureService.pushAshNotifyToUsers();
       functions.logger.info("batch end.");
     });
@@ -70,5 +65,10 @@ async function handlePostBack(events: any, userId: any) {
 
 async function handleReply(events: any, userId: any) {
   functions.logger.info("handle reply.", userId);
+  functions.logger.info("handle reply.", userId);
+  const userDoc = await airPressureService.getUser(userId);
+  if (!userDoc.exists) {
+    await airPressureService.createUser(userId);
+  }
   airPressureService.handleReply(events);
 }

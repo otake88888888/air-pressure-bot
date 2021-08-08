@@ -25,7 +25,11 @@ module.exports = {
     "import",
   ],
   rules: {
-    quotes: ["error", "double"],
-    camelcase: "off",
+    "quotes": ["error", "double"],
+    "camelcase": "off",
+    "require-jsdoc": 0,
+    "max-len": 0,
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any ": "off",
   },
 };

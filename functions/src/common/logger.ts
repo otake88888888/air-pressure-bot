@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import * as functions from "firebase-functions";

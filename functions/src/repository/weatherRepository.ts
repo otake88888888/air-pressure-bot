@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable max-len */
-/* eslint-disable require-jsdoc */
 import {inject, singleton} from "tsyringe";
 import {ILogger} from "../common/logger";
 import * as rm from "typed-rest-client/RestClient";
