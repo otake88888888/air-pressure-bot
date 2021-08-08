@@ -25,6 +25,7 @@ export class FireStoreRepository {
   }
 
   async createUser(userId: string) {
+    this.logger.info(`create user. ${userId}`);
     const userRef = this.db.collection("users").doc(userId);
     const userDoc = await userRef
         .get()

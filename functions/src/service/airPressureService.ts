@@ -5,7 +5,7 @@ import * as queryString from "query-string";
 import {ILogger} from "../common/logger";
 import {LineRepository} from "../repository/lineRepository";
 import {WeatherRepository} from "../repository/weatherRepository";
-import { FireStoreRepository } from "../repository/fireStoreRepository";
+import {FireStoreRepository} from "../repository/fireStoreRepository";
 
 @injectable()
 export class AirPressureService {
@@ -28,11 +28,16 @@ export class AirPressureService {
   }
 
   async handleReply(events: any) {
+    const formated = await this.getFormatedWeatherMessage();
+    await this.replyMessage(formated, events);
+  }
+
+  private async getFormatedWeatherMessage() {
     const weather = await this.getAirPressure();
     const todayWeather = weather?.today;
     const amSevenWeather = todayWeather?.find((x) => x.time === "7");
     const formated = this.weatherRepository.getFormatedWeather(amSevenWeather);
-    await this.replyMessage(formated, events);
+    return formated;
   }
 
   async handlePostBack(
@@ -46,7 +51,15 @@ export class AirPressureService {
   }
 
   async pushAshNotifyToUsers() {
-    this.logger.info("");
+    const message = await this.getFormatedWeatherMessage();
+
+    const userRef = this.fireStoreRepository.db.collection("users");
+    const snapshot = await userRef.get();
+    snapshot.forEach(async (doc) => {
+      console.log(doc.id, "=>", doc.data());
+      const userId = doc.id;
+      this.lineRepository.pushMessage(userId, message);
+    });
   }
 
   async getUser(userId: string) {
